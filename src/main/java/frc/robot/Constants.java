@@ -36,11 +36,11 @@ public final class Constants {
         public static final double KPID_SideHang_PowerUpperLimit = 1;
         public static final double KPID_SideHang_PowerLowerLimit = -1;
 
-//        public static final double KPID_MiddleHang_P = 0.1;
-//        public static final double KPID_MiddleHang_I = 0;
-//        public static final double KPID_MiddleHang_D = 0;
-//        public static final double KPID_MiddleHang_PowerUpperLimit = 1;
-//        public static final double KPID_MiddleHang_PowerLowerLimit = -1;
+        public static final double KPID_MiddleHang_P = 0.1;
+        public static final double KPID_MiddleHang_I = 0;
+        public static final double KPID_MiddleHang_D = 0;
+        public static final double KPID_MiddleHang_PowerUpperLimit = 1;
+        public static final double KPID_MiddleHang_PowerLowerLimit = -1;
         public static final int MiddleHang_BenchmarkPosition = 1000; //中間吊掛最低點（AbsoluteEncoderUnit）
     }
 

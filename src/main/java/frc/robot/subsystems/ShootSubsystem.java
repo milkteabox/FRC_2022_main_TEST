@@ -5,6 +5,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
@@ -14,19 +15,19 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShootSubsystem extends SubsystemBase
 {
-    private final WPI_TalonFX m_shoot_1 = new WPI_TalonFX(11);
-    private final WPI_VictorSPX m_shoot_2 = new WPI_VictorSPX(10);
+    private final WPI_TalonFX m_Falcon500 = new WPI_TalonFX(11);
+    private final WPI_VictorSPX m_Redline775 = new WPI_VictorSPX(10);
 
     public void StartShoot(boolean shoot){
         if (shoot){
-            m_shoot_1.set(-0.9);
+            m_Falcon500.set(0.9);
         }
     }    /** Creates a new ExampleSubsystem. */
     public ShootSubsystem() {
     }
     public void ShootMotorRED(boolean Redshoot){
         if(Redshoot){
-            m_shoot_2.set(1);
+            m_Redline775.set(1);
         }
 }
     

@@ -35,6 +35,11 @@ public class HangSubsystem extends SubsystemBase
             HangerConstants.KPID_LeftHang_P,
             HangerConstants.KPID_LeftHang_I,
             HangerConstants.KPID_LeftHang_D);
+    
+    private final PIDController PID_MiddleHang = new PIDController(
+            HangerConstants.KPID_MiddleHang_P,
+            HangerConstants.KPID_MiddleHang_I,
+            HangerConstants.KPID_MiddleHang_D);
 
     private final DoubleSolenoid DSol_1 = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,1,0);
 
@@ -51,7 +56,7 @@ public class HangSubsystem extends SubsystemBase
             HangerConstants.KEncoder_L_Reversed);
 
     private int PID_SideHangDistance_Setpoint = 0;
-    private int MiddleHang_SetPosition = HangerConstants.MiddleHang_BenchmarkPosition;
+    private int PID_MiddleHang_Setpoint = HangerConstants.MiddleHang_BenchmarkPosition;
     /** Creates a new ExampleSubsystem. */
     public void HangSoleniod(boolean forward,boolean reverse){
         if(forward){
@@ -68,7 +73,7 @@ public class HangSubsystem extends SubsystemBase
     public void Confirm_Benchmark() {
         m_hang_R.set(0.3);
         m_hang_L.set(0.3);
-        m_hang_M.set(ControlMode.Position, HangerConstants.MiddleHang_BenchmarkPosition );
+        m_hang_M.set(0.3);
     }
     public void HangMotor(int POV, boolean ButtonA, boolean ButtonB){
             switch (POV){
@@ -83,11 +88,11 @@ public class HangSubsystem extends SubsystemBase
         }
         if (ButtonA){
             //中間吊掛上升
-            MiddleHang_SetPosition += 100;
+            PID_MiddleHang_Setpoint += 100;
         }
         if (ButtonB) {
             //中間吊掛下降
-            MiddleHang_SetPosition -= 100;
+            PID_MiddleHang_Setpoint -= 100;
         }
     }
 
@@ -103,9 +108,13 @@ public class HangSubsystem extends SubsystemBase
             Left_Encoder.reset();
             CurrentLeftHang_PercentOutput=0;
         }
+        double CurrentMiddleHang_PercentOutput = MathUtil.clamp(PID_MiddleHang.calculate(m_hang_M.getSelectedSensorPosition(), PID_MiddleHang_Setpoint), HangerConstants.KPID_MiddleHang_PowerLowerLimit, HangerConstants.KPID_MiddleHang_PowerUpperLimit);
+        if(m_hang_M.getSelectedSensorPosition() <= HangerConstants.MiddleHang_BenchmarkPosition && CurrentMiddleHang_PercentOutput > 0) {
+            CurrentMiddleHang_PercentOutput = 0;
+        }
         m_hang_R.set(ControlMode.PercentOutput, CurrentRightHang_PercentOutput);
         m_hang_L.set(ControlMode.PercentOutput, CurrentLeftHang_PercentOutput);
-        m_hang_M.set(ControlMode.Position, MiddleHang_SetPosition);
+        m_hang_M.set(ControlMode.PercentOutput, CurrentMiddleHang_PercentOutput);
     }
 
     @Override

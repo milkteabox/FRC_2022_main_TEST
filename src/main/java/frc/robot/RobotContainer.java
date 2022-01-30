@@ -26,12 +26,12 @@ import frc.robot.subsystems.ShootSubsystem;
 public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
-    private final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-    private final DriveSubsystem DriveSubsystem = new DriveSubsystem();
-    private final HangSubsystem HangSubsystem = new HangSubsystem();
-    private final ShootSubsystem ShootSubsystem = new ShootSubsystem();
-    public final XboxController controller_X = new XboxController(0);
-    public final Joystick controller_F = new Joystick(1);
+    ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+    DriveSubsystem DriveSubsystem = new DriveSubsystem();
+    HangSubsystem HangSubsystem = new HangSubsystem();
+    ShootSubsystem ShootSubsystem = new ShootSubsystem();
+    XboxController controller_X = new XboxController(0);
+    Joystick controller_F = new Joystick(1);
 
     
     private final ExampleCommand autoCommand = new ExampleCommand(exampleSubsystem);
@@ -46,7 +46,7 @@ public class RobotContainer
             DriveSubsystem.drive(-controller_X.getLeftY(),controller_X.getRightX());
             DriveSubsystem.collect(controller_X.getRightTriggerAxis()-controller_X.getLeftTriggerAxis());
             HangSubsystem.HangSoleniod(controller_X.getYButton(),controller_X.getAButton());
-            HangSubsystem.HangMotor(controller_X.getPOV(),controller_X.getBButton(),controller_X.getXButton());
+            HangSubsystem.HangMotor(controller_X.getPOV(), controller_X.getBButton(), controller_X.getXButton());
             ShootSubsystem.StartShoot(controller_X.getRightBumper());
             ShootSubsystem.ShootMotorRED(controller_X.getLeftBumper());
         }, HangSubsystem,DriveSubsystem,ShootSubsystem));

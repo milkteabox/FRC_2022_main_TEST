@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
+import edu.wpi.first.math.*;
 
 
 public class DriveSubsystem extends SubsystemBase
@@ -25,16 +26,29 @@ public class DriveSubsystem extends SubsystemBase
     private final DifferentialDrive m_drive = new DifferentialDrive(m_left,m_right);
 
     public void drive(double X,double Y){
+        //遙桿死區
+        if(Math.abs(X) <= 0.3) {
+            if (X < 0) {
+                X = -0.3;
+            }
+            else if (X > 0) {
+                X = 0.3;
+            }
+        }
+        if(Math.abs(Y) <= 0.3) {
+            if (Y < 0) {
+                Y = -0.3;
+            }
+            else if (Y > 0) {
+                Y = 0.3;
+            }
+        }
         m_drive.arcadeDrive(Y,X);
     }
-    public void collect(double take){
-            m_intake.set(take);
+    public void collect(double speed){
+        m_intake.set(speed);
     }
     /** Creates a new ExampleSubsystem. */
-    public DriveSubsystem() {
-
-    }
-    
     
     @Override
     public void periodic()

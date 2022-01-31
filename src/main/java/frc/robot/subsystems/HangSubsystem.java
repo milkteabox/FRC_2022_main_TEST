@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.HangerConstants;
 import frc.robot.RobotContainer;
@@ -75,7 +76,7 @@ public class HangSubsystem extends SubsystemBase
         m_hang_L.set(0.3);
         m_hang_M.set(0.3);
     }
-    public void HangMotor(int POV, boolean ButtonA, boolean ButtonB){
+    public void HangMotor(int POV, boolean ButtonA, boolean ButtonB) {
             switch (POV){
                 case 0:
                     PID_SideHangDistance_Setpoint += 100;
@@ -115,6 +116,10 @@ public class HangSubsystem extends SubsystemBase
         m_hang_R.set(ControlMode.PercentOutput, CurrentRightHang_PercentOutput);
         m_hang_L.set(ControlMode.PercentOutput, CurrentLeftHang_PercentOutput);
         m_hang_M.set(ControlMode.PercentOutput, CurrentMiddleHang_PercentOutput);
+
+        SmartDashboard.putNumber("Side_RightHang_Encoder", Right_Encoder.getDistance());
+        SmartDashboard.putNumber("Side_LeftHang_Encoder", Left_Encoder.getDistance());
+        SmartDashboard.putNumber("MiddleHang_Encoder", m_hang_M.getSelectedSensorPosition());
     }
 
     @Override
